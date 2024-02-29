@@ -1,0 +1,636 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Web Extensions</title>
+  <meta content="w3c/CG-DRAFT" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
+  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
+  <link href="https://w3c.github.io/webextensions" rel="canonical">
+  <meta content="810eb985d9a171e5cd8a75a609c99fc203d4ee53" name="document-revision">
+<style>/* Boilerplate: style-autolinks */
+.css.css, .property.property, .descriptor.descriptor {
+    color: var(--a-normal-text);
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+</style>
+<style>/* Boilerplate: style-colors */
+
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #bbb;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #707070;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">Web Extensions</h1>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-02-29">29 February 2024</time></p>
+   <details open>
+    <summary>More details about this document</summary>
+    <div data-fill-with="spec-metadata">
+     <dl>
+      <dt>This version:
+      <dd><a class="u-url" href="https://w3c.github.io/webextensions">https://w3c.github.io/webextensions</a>
+      <dt>Issue Tracking:
+      <dd><a href="https://github.com/xeenon/webextensions/issues/">GitHub</a>
+      <dd><a href="#issues-index">Inline In Spec</a>
+      <dt class="editor">Editors:
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:mpurohit@microsoft.com">Mukul Purohit</a> (<a class="p-org org" href="https://www.microsoft.com">Microsoft Corporation</a>)
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:tjovanovic@mozilla.com">Tomislav Jovanovic</a> (<a class="p-org org" href="https://www.mozilla.org/">Mozilla</a>)
+     </dl>
+    </div>
+   </details>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 the Contributors to the Web Extensions Specification, published by the <a href="https://www.w3.org/community/webextensions/">WebExtensions Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>[Placeholder] Abstract.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p> This specification was published by the <a href="https://www.w3.org/community/webextensions/">WebExtensions Community Group</a>.
+  It is not a W3C Standard nor is it on the W3C Standards Track.
+
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
+
+  Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#w3c-conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+     </ol>
+    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
+   </ol>
+  </nav>
+  <main>
+   <h3 class="heading settled" id="file-structure"><span class="content">File structure</span></h3>
+   <p>Once unpacked from the distribution format, a WebExtension is a directory containing a number of files.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> In some operating systems, filenames are case insensitive. This can lead to naming collisions.</p>
+   <h4 class="heading settled" id="manifestjson"><span class="content">manifest.json</span></h4>
+   <p>A <a href="#manifest">Manifest</a> file.</p>
+   <h4 class="heading settled" id="_locales-subdirectory"><span class="content">_locales subdirectory</span></h4>
+   <p>An optional directory containing strings as defined in <a href="#localization">localization</a>.</p>
+   <h4 class="heading settled" id="other-files"><span class="content">Other files</span></h4>
+   <p>An extension may also contain other files, such as those referenced in the <a href="#key-content_scripts">content_scripts</a> and <a href="#key-background">background</a> part of the <a href="#manifest">Manifest</a>.</p>
+   <h3 class="heading settled" id="manifest"><span class="content">Manifest</span></h3>
+   <p>A WebExtension must have a manifest file at its root directory.</p>
+   <h4 class="heading settled" id="manifest-file"><span class="content">Manifest file</span></h4>
+   <p>A manifest file is a <a data-link-type="biblio" href="#biblio-json" title="The JavaScript Object Notation (JSON) Data Interchange Format">[JSON]</a> document named <code>manifest.json</code>. Malformed JSON files are not supported.</p>
+   <h4 class="heading settled" id="manifest-keys"><span class="content">Manifest keys</span></h4>
+   <p>If manifest keys that are not defined in this specification are specified, implementors must ignore those keys.</p>
+   <p>If manifest keys that are defined in this specification are specified with a different JSON type than defined in this specification, implementors must ignore those keys.</p>
+   <p>The following keys must be considered valid:</p>
+   <ul>
+    <li data-md>
+     <p><a href="#key-manifest_version"><code>manifest_version</code></a>: required.</p>
+    <li data-md>
+     <p><a href="#key-name"><code>name</code></a>: required.</p>
+    <li data-md>
+     <p><a href="#key-version"><code>version</code></a>: required.</p>
+    <li data-md>
+     <p><a href="#key-default_locale"><code>default_locale</code></a>: required under some conditions.</p>
+    <li data-md>
+     <p><a href="#key-background"><code>background</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-commands"><code>commands</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-content_scripts"><code>content_scripts</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-content_security_policy"><code>content_security_policy</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-description"><code>description</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-icons"><code>icons</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-optional_permissions"><code>optional_permissions</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-options_ui"><code>options_ui</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-permissions"><code>permissions</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-short_name"><code>short_name</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-web_accessible_resources"><code>web_accessible_resources</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-devtools_page"><code>devtools_page</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-externally_connectable"><code>externally_connectable</code></a>: optional</p>
+   </ul>
+   <p>The following keys must be considered valid in Manifest V3:</p>
+   <ul>
+    <li data-md>
+     <p><a href="#key-host_permissions"><code>host_permissions</code></a>: optional</p>
+    <li data-md>
+     <p><a href="#key-optional_host_permissions"><code>optional_host_permissions</code></a>: optional</p>
+   </ul>
+   <h5 class="heading settled" id="key-manifest_version"><span class="content">Key <code>manifest_version</code></span></h5>
+   <p>This key must be present.</p>
+   <h5 class="heading settled" id="key-name"><span class="content">Key <code>name</code></span></h5>
+   <p>Name of the extension used in the browser’s user interface. This should be the full name used to identify the extension. See also <a href="#key-short_name"><code>short_name</code></a>.</p>
+   <p>This key must be present. This property can be localized.</p>
+   <h5 class="heading settled" id="key-version"><span class="content">Key <code>version</code></span></h5>
+   <p>This key must be present.</p>
+   <h5 class="heading settled" id="key-permissions"><span class="content">Key <code>permissions</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-optional_permissions"><span class="content">Key <code>optional_permissions</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-host_permissions"><span class="content">Key <code>host_permissions</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-optional_host_permissions"><span class="content">Key <code>optional_host_permissions</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-default_locale"><span class="content">Key <code>default_locale</code></span></h5>
+   <p>This key must be present if the <code>_locales</code> subdirectory is present, must be absent otherwise.</p>
+   <h5 class="heading settled" id="key-background"><span class="content">Key <code>background</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-commands"><span class="content">Key <code>commands</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-content_scripts"><span class="content">Key <code>content_scripts</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-content_security_policy"><span class="content">Key <code>content_security_policy</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-description"><span class="content">Key <code>description</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-icons"><span class="content">Key <code>icons</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-options_ui"><span class="content">Key <code>options_ui</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-short_name"><span class="content">Key <code>short_name</code></span></h5>
+   <p>The short name of the extension. This value should be used in contexts where <a href="#key-name"><code>name</code></a> is too long to use in full. If <code>short_name</code> is not provided, manifest consumers should use a truncated version of <code>name</code>.</p>
+   <p>This key may be present. This property can be localized.</p>
+   <h5 class="heading settled" id="key-web_accessible_resources"><span class="content">Key <code>web_accessible_resources</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-externally_connectable"><span class="content">Key <code>externally_connectable</code></span></h5>
+   <p>This key may be present.</p>
+   <h5 class="heading settled" id="key-devtools_page"><span class="content">Key <code>devtools_page</code></span></h5>
+   <p>This key may be present.</p>
+   <h4 class="heading settled" id="reserved-file-names"><span class="content">Reserved file names</span></h4>
+   <p>Filenames beginning with an underscore (<code>_</code>) are reserved for use by user agent.</p>
+   <h3 class="heading settled" id="isolated-worlds"><span class="content">Isolated worlds</span></h3>
+   <h3 class="heading settled" id="unavailable-apis"><span class="content">Unavailable APIs</span></h3>
+   <h3 class="heading settled" id="the-browser-global"><span class="content">The <code>browser</code> global</span></h3>
+   <h3 class="heading settled" id="extension-origin"><span class="content">Extension origin</span></h3>
+   <h3 class="heading settled" id="localization"><span class="content">Localization</span></h3>
+   <p>The _locales subdirectory of a WebExtension can contain strings for internationalization purposes.</p>
+   <p class="issue" id="issue-e5b8cfc7"><a class="self-link" href="#issue-e5b8cfc7"></a> Specify localization handling. <a href="https://github.com/xeenon/webextensions/issues/62">[Issue #62]</a></p>
+   <h3 class="heading settled" id="host-permissions"><span class="content">Host permissions</span></h3>
+   <h4 class="heading settled" id="cross-origin-fetch"><span class="content">Cross-origin fetch</span></h4>
+   <h3 class="heading settled" id="match-patterns"><span class="content">Match patterns</span></h3>
+   <h3 class="heading settled" id="concepts"><span class="content">Concepts</span></h3>
+   <h4 class="heading settled" id="uniqueness-of-extension-ids"><span class="content">Uniqueness of extension IDs</span></h4>
+   <h4 class="heading settled" id="promises-and-callbacks"><span class="content">Promises and callbacks</span></h4>
+   <h4 class="heading settled" id="user-gestures-and-activetab"><span class="content">User gestures and activeTab</span></h4>
+   <h4 class="heading settled" id="extension-permissions-and-web-perissions"><span class="content">Extension permissions and web perissions</span></h4>
+   <h3 class="heading settled" id="content-security-policy"><span class="content">Content security policy</span></h3>
+   <h3 class="heading settled" id="architecture"><span class="content">Architecture</span></h3>
+   <h4 class="heading settled" id="background-content"><span class="content">Background content</span></h4>
+   <h4 class="heading settled" id="content-scripts"><span class="content">Content scripts</span></h4>
+   <h5 class="heading settled" id="isolated-worlds①"><span class="content">Isolated worlds</span></h5>
+   <h4 class="heading settled" id="extension-pages"><span class="content">Extension pages</span></h4>
+   <h3 class="heading settled" id="classes-of-security-risk"><span class="content">Classes of security risk</span></h3>
+   <h3 class="heading settled" id="web-accessible-resources"><span class="content">Web accessible resources</span></h3>
+   <h3 class="heading settled" id="interaction-with-the-web"><span class="content">Interaction with the web</span></h3>
+   <h4 class="heading settled" id="current-behavior-of-cookie-partitioning"><span class="content">Current behavior of cookie partitioning</span></h4>
+   <h3 class="heading settled" id="version-number-handling"><span class="content">Version number handling</span></h3>
+  </main>
+  <div data-fill-with="conformance">
+   <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span></h2>
+   <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span></h3>
+   <p>Conformance requirements are expressed
+    with a combination of descriptive assertions
+    and RFC 2119 terminology.
+    The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
+    in the normative parts of this document
+    are to be interpreted as described in RFC 2119.
+    However, for readability,
+    these words do not appear in all uppercase letters in this specification. </p>
+   <p>All of the text of this specification is normative
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">[RFC2119]</a> </p>
+   <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text
+    with <code>class="example"</code>,
+    like this: </p>
+   <div class="example" id="w3c-example">
+    <a class="self-link" href="#w3c-example"></a> 
+    <p>This is an example of an informative example. </p>
+   </div>
+   <p>Informative notes begin with the word “Note”
+    and are set apart from the normative text
+    with <code>class="note"</code>,
+    like this: </p>
+   <p class="note" role="note">Note, this is an informative note.</p>
+  </div>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span></h3>
+  <dl>
+   <dt id="biblio-json">[JSON]
+   <dd>T. Bray, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc8259"><cite>The JavaScript Object Notation (JSON) Data Interchange Format</cite></a>. December 2017. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>
+   <dt id="biblio-rfc2119">[RFC2119]
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+  </dl>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span></h2>
+  <div style="counter-reset:issue">
+   <div class="issue"> Specify localization handling. <a href="https://github.com/xeenon/webextensions/issues/62">[Issue #62]</a> <a class="issue-return" href="#issue-e5b8cfc7" title="Jump to section">↵</a></div>
+  </div>
